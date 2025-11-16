@@ -1,8 +1,10 @@
 #include <Arduino.h>
-#include <ESP32Servo.h>
 #include <DHT.h>
+#include <ESP32Servo.h>
 
-//pin definitions
+#include "../lib/networking/networking.h"
+
+// pin definitions
 
 const int ESC_PIN = 26;
 const int SERVO_PIN = 27;
@@ -17,7 +19,11 @@ String sensorData = "";
 
 void setup() {
     Serial.begin(115200);
+	// wait for serial to initialize
+	while (!Serial);
 
+	init_wifi();
+	init_esp_now();
     dht11.begin();
 
     //attach ESC
