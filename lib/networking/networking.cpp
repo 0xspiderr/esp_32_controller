@@ -3,9 +3,6 @@
  *****************************************************/
 #include "networking.h"
 
-// test on board led command
-#define LED_GPIO 18
-
 /*****************************************************
  *  VARIABLES
  *****************************************************/
@@ -19,7 +16,6 @@ static esp_now_command recv_data;
  *****************************************************/
 void init_wifi(void)
 {
-	pinMode(LED_GPIO, OUTPUT);
 	size_t no_connection_cnt = 0;
 	WiFi.mode(WIFI_MODE_STA);
 	WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
@@ -36,7 +32,7 @@ void init_wifi(void)
 	}
 
 	ESP_LOGI(TAG, "Connected to WiFi: http://%s", WiFi.localIP().toString().c_str());
-	ESP_LOGI(TAG, "RSSI(signal strength):%d", WiFi.RSSI());   // numbers closer to 0 mean better signal strength
+	ESP_LOGI(TAG, "RSSI(signal strength):%s", String(WiFi.RSSI()).c_str());   // numbers closer to 0 mean better signal strength
 	ESP_LOGI(TAG, "Receiver esp32 board MAC address:%s", WiFi.macAddress().c_str());
 }
 
@@ -71,7 +67,7 @@ static void execute_cmd (const char *cmd)
 {
 	String command = String(cmd);
 
-	if (command.equals("F"))
+	if (command == "F")
 	{
 		ESP_LOGI(TAG, "command received:%s", command.c_str());
 		digitalWrite(LED_GPIO, HIGH);

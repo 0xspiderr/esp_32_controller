@@ -18,6 +18,8 @@ typedef struct esp_now_command
     char cmd[4];
 } esp_now_command;
 
+// test on board led command
+#define LED_GPIO 2
 
 /*****************************************************
  *  PROTOTYPES

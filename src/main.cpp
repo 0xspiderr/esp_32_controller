@@ -22,22 +22,27 @@ void setup() {
 	// wait for serial to initialize
 	while (!Serial);
 
+	pinMode(LED_GPIO, OUTPUT);
+	digitalWrite(LED_GPIO, LOW);
+
 	init_wifi();
 	init_esp_now();
-    dht11.begin();
-
-    //attach ESC
-    esc.attach(ESC_PIN, 1000, 2000); // min, max
-    servo.attach(SERVO_PIN, 1000, 1400);
-    delay(2000);
-
-    //send neutral for 3+ seconds (initialization)
-    esc.writeMicroseconds(1500);
-    servo.writeMicroseconds(1200);
-
-    delay(4000);
-
-    Serial.println("ESC and Servo initialized. Ready for commands.");
+ //    dht11.begin();
+ //
+ //    //attach ESC
+ //    esc.attach(ESC_PIN, 1000, 2000); // min, max
+ //    servo.attach(SERVO_PIN, 1000, 1400);
+	// digitalWrite(LED_GPIO, HIGH);
+ //    delay(2000);
+	// digitalWrite(LED_GPIO, LOW);
+ //
+ //    //send neutral for 3+ seconds (initialization)
+ //    esc.writeMicroseconds(1500);
+ //    servo.writeMicroseconds(1200);
+ //
+ //    delay(4000);
+ //
+ //    Serial.println("ESC and Servo initialized. Ready for commands.");
 }
 
 //function to enable reverse mode on ESC
@@ -52,106 +57,106 @@ void armReverseMode() {
     delay(500);
 }
 
-void loop() {
-    //DHT11 CODE START
-
-    // humidity
-    float humi = dht11.readHumidity();
-    // temperature
-    float tempC = dht11.readTemperature();
-
-    // check reading successful or not
-    if (isnan(tempC) || isnan(humi)) {
-        sensorData = "Failed to read from DHT11 sensor!";
-        Serial.println(sensorData);
-    } else {
-        // print to serial
-        Serial.print("humidity: ");
-        Serial.print(humi);
-        Serial.print("%");
-        Serial.print("...");
-        Serial.print("temp: ");
-        Serial.print(tempC);
-        Serial.println("degrees C");
-    }
-
-    // wait 1 sec between readings
-    delay(1000);
-
-    //DHT11 CODE END
-
-    //SERVO+ESC TESTING CODE
-
-    /*
-     TESTED VALUES FOR ESC AND SERVO:
-     Note: When going forward you need to wait longer (1-2 seconds) before it moves,idk why
-
-     > FOR ESC:
-
-         * NEUTRAL:
-         esc.writeMicroseconds(1500);
-
-         * FORWARD:
-
-         At this value it beeps:
-         esc.writeMicroseconds(1543);
-
-         At this value it moves (slow, with force):
-         esc.writeMicroseconds(1563);
-
-         * BACKWARD:
-
-         At this value it beeps:
-         esc.writeMicroseconds(1445);
-
-         At this value it moves (slow, with force):
-         esc.writeMicroseconds(1388);
-
-     > FOR SERVO:
-
-         * Far left:
-         servo.writeMicroseconds(1400);
-
-         * Center:
-         servo.writeMicroseconds(1200);
-
-         * Far right:
-         servo.writeMicroseconds(1000);
-    */
-
-    //TESTING CODE FOR ESC AND SERVO START
-
-    // forward + left
-    Serial.println("Forward + Left");
-    esc.writeMicroseconds(1583);
-    delay(200);
-    servo.writeMicroseconds(1400);
-    delay(1000);
-
-    // neutral + center
-    Serial.println("Neutral + Center");
-    esc.writeMicroseconds(1500);
-    delay(200);
-    servo.writeMicroseconds(1200);
-    delay(1000);
-
-    // arm reverse mode before going backward
-    armReverseMode();
-
-    // backward + right
-    Serial.println("Backward + Right");
-    esc.writeMicroseconds(1380);
-    delay(200);
-    servo.writeMicroseconds(1000);
-    delay(1000);
-
-    // neutral + center
-    Serial.println("Neutral + Center");
-    esc.writeMicroseconds(1500);
-    delay(200);
-    servo.writeMicroseconds(1200);
-    delay(1000);
-}
+// void loop() {
+//     //DHT11 CODE START
+//
+//     // humidity
+//     float humi = dht11.readHumidity();
+//     // temperature
+//     float tempC = dht11.readTemperature();
+//
+//     // check reading successful or not
+//     if (isnan(tempC) || isnan(humi)) {
+//         sensorData = "Failed to read from DHT11 sensor!";
+//         Serial.println(sensorData);
+//     } else {
+//         // print to serial
+//         Serial.print("humidity: ");
+//         Serial.print(humi);
+//         Serial.print("%");
+//         Serial.print("...");
+//         Serial.print("temp: ");
+//         Serial.print(tempC);
+//         Serial.println("degrees C");
+//     }
+//
+//     // wait 1 sec between readings
+//     delay(1000);
+//
+//     //DHT11 CODE END
+//
+//     //SERVO+ESC TESTING CODE
+//
+//     /*
+//      TESTED VALUES FOR ESC AND SERVO:
+//      Note: When going forward you need to wait longer (1-2 seconds) before it moves,idk why
+//
+//      > FOR ESC:
+//
+//          * NEUTRAL:
+//          esc.writeMicroseconds(1500);
+//
+//          * FORWARD:
+//
+//          At this value it beeps:
+//          esc.writeMicroseconds(1543);
+//
+//          At this value it moves (slow, with force):
+//          esc.writeMicroseconds(1563);
+//
+//          * BACKWARD:
+//
+//          At this value it beeps:
+//          esc.writeMicroseconds(1445);
+//
+//          At this value it moves (slow, with force):
+//          esc.writeMicroseconds(1388);
+//
+//      > FOR SERVO:
+//
+//          * Far left:
+//          servo.writeMicroseconds(1400);
+//
+//          * Center:
+//          servo.writeMicroseconds(1200);
+//
+//          * Far right:
+//          servo.writeMicroseconds(1000);
+//     */
+//
+//     //TESTING CODE FOR ESC AND SERVO START
+//
+//     // forward + left
+//     Serial.println("Forward + Left");
+//     esc.writeMicroseconds(1583);
+//     delay(200);
+//     servo.writeMicroseconds(1400);
+//     delay(1000);
+//
+//     // neutral + center
+//     Serial.println("Neutral + Center");
+//     esc.writeMicroseconds(1500);
+//     delay(200);
+//     servo.writeMicroseconds(1200);
+//     delay(1000);
+//
+//     // arm reverse mode before going backward
+//     armReverseMode();
+//
+//     // backward + right
+//     Serial.println("Backward + Right");
+//     esc.writeMicroseconds(1380);
+//     delay(200);
+//     servo.writeMicroseconds(1000);
+//     delay(1000);
+//
+//     // neutral + center
+//     Serial.println("Neutral + Center");
+//     esc.writeMicroseconds(1500);
+//     delay(200);
+//     servo.writeMicroseconds(1200);
+//     delay(1000);
+// }
 
 // !! CODE FOR CALIBRATION/ TESTING !!
 
@@ -284,3 +289,8 @@ void loop() {
     delay(10);
 }
 */
+
+void loop()
+{
+
+}
