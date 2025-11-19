@@ -2,6 +2,7 @@
 *  INCLUDES
  *****************************************************/
 #include "networking.h"
+#include <esp_wifi.h>
 
 /*****************************************************
  *  VARIABLES
@@ -9,6 +10,7 @@
 // for error logging
 static const char *TAG = "NETWORKING";
 static esp_now_command recv_data;
+static int led_state = LOW;
 
 
 /*****************************************************
@@ -17,7 +19,8 @@ static esp_now_command recv_data;
 void init_wifi(void)
 {
 	size_t no_connection_cnt = 0;
-	WiFi.mode(WIFI_MODE_STA);
+	WiFi.mode(WIFI_MODE_APSTA);
+	esp_wifi_set_ps(WIFI_PS_NONE);
 	WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
 	ESP_LOGI(TAG, "Attempting to connect to WiFi");
 	// try wifi connection, restart esp after 15 seconds if not succesfull and try again.
@@ -66,16 +69,38 @@ static void on_data_recv(const uint8_t *mac_addr, const uint8_t *incoming_data_b
 static void execute_cmd (const char *cmd)
 {
 	String command = String(cmd);
+	// if (led_state == LOW)
+	// 	led_state = HIGH;
+	// else
+	// 	led_state = LOW;
+	// digitalWrite(LED_GPIO, led_state);
 
 	if (command == "F")
 	{
-		ESP_LOGI(TAG, "command received:%s", command.c_str());
+		ESP_LOGI(TAG, "Forward command");
 		digitalWrite(LED_GPIO, HIGH);
+	}
+	else if (command == "B")
+	{
+		ESP_LOGI(TAG, "Backward command");
+	}
+	else if (command == "L")
+	{
+		ESP_LOGI(TAG, "Left turn command");
+	}
+	else if (command == "R")
+	{
+		ESP_LOGI(TAG, "Right turn command");
+	}
+	else if (command == "S")
+	{
+		ESP_LOGI(TAG, "Stop command");
+		digitalWrite(LED_GPIO, LOW);
 	}
 	else
 	{
-		ESP_LOGW(TAG, "unknown command received:%s", command.c_str());
+		ESP_LOGW(TAG, "Unknown command: %s", command.c_str());
+		// Default to stop for safety
 		digitalWrite(LED_GPIO, LOW);
 	}
-
 }

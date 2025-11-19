@@ -4,8 +4,8 @@
 /*****************************************************
  *  VARIABLES
  *****************************************************/
-static const char *WIFI_SSID = "DIGI_491bd8";
-static const char *WIFI_PASSWORD = "f988b6e4";
+static const char *WIFI_SSID = "B020";
+static const char *WIFI_PASSWORD = "diferential2019";
 
 
 #endif //WIFI_CREDENTIALS_H
