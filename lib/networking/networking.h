@@ -9,13 +9,14 @@
 #include <WiFi.h>
 #include <../../include/wifi_credentials.h>
 #include <esp_now.h>
+#include "../arm_control/arm_control.h"
 
 /*****************************************************
  *  STRUCTURES
  *****************************************************/
 typedef struct esp_now_command
 {
-	char cmd[4];
+	char cmd[8];
 } esp_now_command;
 
 // test on board led command

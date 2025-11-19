@@ -10,7 +10,6 @@
 // for error logging
 static const char *TAG = "NETWORKING";
 static esp_now_command recv_data;
-static int led_state = LOW;
 
 
 /*****************************************************
@@ -18,9 +17,8 @@ static int led_state = LOW;
  *****************************************************/
 void init_wifi(void)
 {
-	size_t no_connection_cnt = 0;
 	WiFi.mode(WIFI_AP_STA); // dont change this
-	// esp_wifi_set_channel(TRANSMITTER_WIFI_CHANNEL, WIFI_SECOND_CHAN_NONE);
+	esp_wifi_set_channel(TRANSMITTER_WIFI_CHANNEL, WIFI_SECOND_CHAN_NONE);
 	esp_wifi_set_ps(WIFI_PS_NONE);
 	ESP_LOGI(TAG, "Connected to WiFi: http://%s", WiFi.localIP().toString().c_str());
 	ESP_LOGI(TAG, "RSSI(signal strength):%s", String(WiFi.RSSI()).c_str());   // numbers closer to 0 mean better signal strength
@@ -79,6 +77,21 @@ static void execute_cmd (const char *cmd)
 	{
 		ESP_LOGI(TAG, "Stop command");
 		digitalWrite(LED_GPIO, LOW);
+	}
+	else if (command == "SAM")
+	{
+		ESP_LOGI(TAG, "Stop arm motor command");
+		stop_arm_motor();
+	}
+	else if (command == "AMD")
+	{
+		ESP_LOGI(TAG, "Arm motor down command");
+		drive_arm_motor(128);
+	}
+	else if (command == "AMU")
+	{
+		ESP_LOGI(TAG, "Arm motor up command");
+		drive_arm_motor(-128);
 	}
 	else
 	{

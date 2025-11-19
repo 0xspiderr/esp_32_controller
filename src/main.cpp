@@ -1,7 +1,7 @@
+#include <SparkFun_TB6612.h>
 #include <Arduino.h>
 #include <DHT.h>
 #include <ESP32Servo.h>
-
 #include "../lib/networking/networking.h"
 
 // pin definitions
@@ -9,6 +9,12 @@
 const int ESC_PIN = 26;
 const int SERVO_PIN = 27;
 const int DHT11_PIN = 33;
+#define AIN1 14
+#define AIN2 27
+#define PWMA 26
+#define STBY 25
+#define OFFSET_A 1
+static Motor motor1(AIN1, AIN2, PWMA, OFFSET_A, STBY);
 
 Servo esc;
 Servo servo;
@@ -291,4 +297,10 @@ void loop() {
 
 void loop()
 {
+	// delay(2000);
+	// motor1.drive(128);
+	// motor1.brake();
+	// delay(2000);
+	// motor1.drive(-128, 7000);
+	// motor1.brake();
 }
