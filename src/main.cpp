@@ -24,7 +24,6 @@ void setup() {
 
 	pinMode(LED_GPIO, OUTPUT);
 	digitalWrite(LED_GPIO, LOW);
-
 	init_wifi();
 	init_esp_now();
  //    dht11.begin();

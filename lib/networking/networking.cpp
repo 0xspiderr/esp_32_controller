@@ -19,21 +19,9 @@ static int led_state = LOW;
 void init_wifi(void)
 {
 	size_t no_connection_cnt = 0;
-	WiFi.mode(WIFI_MODE_APSTA);
+	WiFi.mode(WIFI_AP_STA); // dont change this
+	// esp_wifi_set_channel(TRANSMITTER_WIFI_CHANNEL, WIFI_SECOND_CHAN_NONE);
 	esp_wifi_set_ps(WIFI_PS_NONE);
-	WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
-	ESP_LOGI(TAG, "Attempting to connect to WiFi");
-	// try wifi connection, restart esp after 15 seconds if not succesfull and try again.
-	while (WiFi.status() != WL_CONNECTED)
-	{
-		delay(100);
-		if (++no_connection_cnt > 150)
-		{
-			ESP_LOGW(TAG, "Connection failed, restarting ESP-32");
-			ESP.restart();
-		}
-	}
-
 	ESP_LOGI(TAG, "Connected to WiFi: http://%s", WiFi.localIP().toString().c_str());
 	ESP_LOGI(TAG, "RSSI(signal strength):%s", String(WiFi.RSSI()).c_str());   // numbers closer to 0 mean better signal strength
 	ESP_LOGI(TAG, "Receiver esp32 board MAC address:%s", WiFi.macAddress().c_str());
@@ -69,11 +57,6 @@ static void on_data_recv(const uint8_t *mac_addr, const uint8_t *incoming_data_b
 static void execute_cmd (const char *cmd)
 {
 	String command = String(cmd);
-	// if (led_state == LOW)
-	// 	led_state = HIGH;
-	// else
-	// 	led_state = LOW;
-	// digitalWrite(LED_GPIO, led_state);
 
 	if (command == "F")
 	{
