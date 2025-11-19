@@ -86,12 +86,28 @@ static void execute_cmd (const char *cmd)
 	else if (command == "AMD")
 	{
 		ESP_LOGI(TAG, "Arm motor down command");
-		drive_arm_motor(128);
+		drive_arm_motor(200);
 	}
 	else if (command == "AMU")
 	{
 		ESP_LOGI(TAG, "Arm motor up command");
-		drive_arm_motor(-128);
+		drive_arm_motor(-200);
+	}
+	else if (command == "ASO")
+	{
+		ESP_LOGI(TAG, "Arm servo open");
+		open_arm_gripper();
+	}
+	else if (command == "ASS")
+	{
+		ESP_LOGI(TAG, "Arm servo stop");
+		stop_arm_gripper();
+	}
+	else if (command == "ASC")
+	{
+		stop_gripper_movement = false;
+		ESP_LOGI(TAG, "Arm servo close");
+		close_arm_gripper();
 	}
 	else
 	{
