@@ -5,6 +5,7 @@
 #include <esp_wifi.h>
 
 #include "../camera_control/camera_control.h"
+#include "../motor_control/motor_control.h"
 
 /*****************************************************
  *  VARIABLES
@@ -48,7 +49,7 @@ void init_esp_now(void)
 
 static void on_data_recv(const uint8_t *mac_addr, const uint8_t *incoming_data_buf, int len)
 {
-	memcpy(&recv_data, incoming_data_buf, sizeof(incoming_data_buf));
+	memcpy(&recv_data, incoming_data_buf, sizeof(recv_data));
 	ESP_LOGI(TAG, "command received:%s", recv_data.cmd);
 	execute_cmd(recv_data.cmd);
 }
@@ -61,24 +62,32 @@ static void execute_cmd (const char *cmd)
 	if (command == "F")
 	{
 		ESP_LOGI(TAG, "Forward command");
-		digitalWrite(LED_GPIO, HIGH);
+		move_foward();
 	}
 	else if (command == "B")
 	{
 		ESP_LOGI(TAG, "Backward command");
+		move_backward();
 	}
 	else if (command == "L")
 	{
 		ESP_LOGI(TAG, "Left turn command");
+		move_left();
 	}
 	else if (command == "R")
 	{
 		ESP_LOGI(TAG, "Right turn command");
+		move_right();
 	}
 	else if (command == "S")
 	{
 		ESP_LOGI(TAG, "Stop command");
-		digitalWrite(LED_GPIO, LOW);
+		move_stop();
+	}
+	else if (command == "NS")
+	{
+		ESP_LOGI(TAG, "Neutral servo command");
+		move_neutral_servo();
 	}
 	else if (command == "SAM")
 	{

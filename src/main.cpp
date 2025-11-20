@@ -4,6 +4,7 @@
 #include <SparkFun_TB6612.h>
 
 #include "../lib/camera_control/camera_control.h"
+#include "../lib/motor_control/motor_control.h"
 #include "../lib/networking/networking.h"
 
 // pin definitions
@@ -30,12 +31,11 @@ void setup() {
 	// wait for serial to initialize
 	while (!Serial);
 
-	pinMode(LED_GPIO, OUTPUT);
-	digitalWrite(LED_GPIO, LOW);
 	init_arm_gripper();
 	init_camera_servo();
 	init_wifi();
 	init_esp_now();
+	init_esc();
  //    dht11.begin();
  //
  //    //attach ESC
