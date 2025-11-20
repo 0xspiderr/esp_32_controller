@@ -21,7 +21,7 @@ extern bool stop_gripper_movement;
 #define OFFSET_A 1
 #define ARM_SERVO_PIN 12
 
-#define ARM_SERVO_DELAY 30
+#define ARM_SERVO_DELAY 80
 
 /*****************************************************
  *  PROTOTYPES

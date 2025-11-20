@@ -4,6 +4,8 @@
 #include "networking.h"
 #include <esp_wifi.h>
 
+#include "../camera_control/camera_control.h"
+
 /*****************************************************
  *  VARIABLES
  *****************************************************/
@@ -98,21 +100,23 @@ static void execute_cmd (const char *cmd)
 		ESP_LOGI(TAG, "Arm servo open");
 		open_arm_gripper();
 	}
-	else if (command == "ASS")
-	{
-		ESP_LOGI(TAG, "Arm servo stop");
-		stop_arm_gripper();
-	}
 	else if (command == "ASC")
 	{
-		stop_gripper_movement = false;
 		ESP_LOGI(TAG, "Arm servo close");
 		close_arm_gripper();
+	}
+	else if (command == "CSR")
+	{
+		ESP_LOGI(TAG, "Camera servo rotate right");
+		rotate_camera_servo_right();
+	}
+	else if (command == "CSL")
+	{
+		ESP_LOGI(TAG, "Camera servo rotate left");
+		rotate_camera_servo_left();
 	}
 	else
 	{
 		ESP_LOGW(TAG, "Unknown command: %s", command.c_str());
-		// Default to stop for safety
-		digitalWrite(LED_GPIO, LOW);
 	}
 }

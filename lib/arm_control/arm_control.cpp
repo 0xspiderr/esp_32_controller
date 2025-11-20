@@ -28,24 +28,23 @@ void stop_arm_motor()
 void init_arm_gripper()
 {
 	arm_servo.attach(ARM_SERVO_PIN);
+	arm_servo.write(current_gripper_pos);
 }
 
 void open_arm_gripper()
 {
-	stop_gripper_movement = false;
-	for (; current_gripper_pos > 0 && !stop_gripper_movement; --current_gripper_pos)
+	for (int i = 90; i > 0; --i)
 	{
-		arm_servo.write(current_gripper_pos);
+		arm_servo.write(i);
 		delay(ARM_SERVO_DELAY);
 	}
 }
 
 void close_arm_gripper()
 {
-	stop_gripper_movement = false;
-	for (; current_gripper_pos < 180 && !stop_gripper_movement; ++current_gripper_pos)
+	for (int i = 0; i < 90; ++i)
 	{
-		arm_servo.write(current_gripper_pos);
+		arm_servo.write(i);
 		delay(ARM_SERVO_DELAY);
 	}
 }
