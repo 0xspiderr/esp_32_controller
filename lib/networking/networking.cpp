@@ -18,7 +18,7 @@ static esp_now_command recv_data;
 /*****************************************************
  *  DEFINITIONS
  *****************************************************/
-void init_wifi(void)
+void init_wifi()
 {
 	WiFi.mode(WIFI_AP_STA); // dont change this
 	esp_wifi_set_channel(TRANSMITTER_WIFI_CHANNEL, WIFI_SECOND_CHAN_NONE);
@@ -28,7 +28,7 @@ void init_wifi(void)
 	ESP_LOGI(TAG, "Receiver esp32 board MAC address:%s", WiFi.macAddress().c_str());
 }
 
-void init_esp_now(void)
+void init_esp_now()
 {
 	esp_err_t err;
 	if (esp_now_init() != ESP_OK)

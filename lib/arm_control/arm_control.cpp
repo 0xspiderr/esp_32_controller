@@ -30,13 +30,13 @@ void drive_arm_motor(int speed)
 	digitalWrite(ENA, HIGH);
 	if (speed <= 0)
 	{
-		digitalWrite(IN1, HIGH);
-		digitalWrite(IN2, LOW);
+		digitalWrite(IN1, LOW);
+		digitalWrite(IN2, HIGH);
 	}
 	else
 	{
-		digitalWrite(IN1, LOW);
-		digitalWrite(IN2, HIGH);
+		digitalWrite(IN1, HIGH);
+		digitalWrite(IN2, LOW);
 	}
 }
 
@@ -57,7 +57,7 @@ void init_arm_gripper()
 
 void open_arm_gripper()
 {
-	for (int i = 90; i > 0; --i)
+	for (int i = 90; i > 20; --i)
 	{
 		arm_servo.write(i);
 		delay(ARM_SERVO_DELAY);
@@ -66,7 +66,7 @@ void open_arm_gripper()
 
 void close_arm_gripper()
 {
-	for (int i = 0; i < 90; ++i)
+	for (int i = 20; i < 90; ++i)
 	{
 		arm_servo.write(i);
 		delay(ARM_SERVO_DELAY);

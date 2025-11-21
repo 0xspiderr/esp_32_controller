@@ -13,7 +13,6 @@
 static const char *TAG = "motor_control";
 static const int ESC_PIN = 26;
 static const int SERVO_PIN = 27;
-static const int DHT11_PIN = 33;
 static Servo esc;
 static Servo servo;
 
