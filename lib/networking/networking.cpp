@@ -97,12 +97,12 @@ static void execute_cmd (const char *cmd)
 	else if (command == "AMD")
 	{
 		ESP_LOGI(TAG, "Arm motor down command");
-		drive_arm_motor(200);
+		drive_arm_motor(1);
 	}
 	else if (command == "AMU")
 	{
 		ESP_LOGI(TAG, "Arm motor up command");
-		drive_arm_motor(-200);
+		drive_arm_motor(-1);
 	}
 	else if (command == "ASO")
 	{

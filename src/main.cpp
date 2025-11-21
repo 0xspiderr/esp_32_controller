@@ -6,18 +6,13 @@
 #include "../lib/camera_control/camera_control.h"
 #include "../lib/motor_control/motor_control.h"
 #include "../lib/networking/networking.h"
+#include "../lib/arm_control/arm_control.h"
 
 // pin definitions
 
 const int ESC_PIN = 26;
 const int SERVO_PIN = 27;
 const int DHT11_PIN = 33;
-#define AIN1 14
-#define AIN2 27
-#define PWMA 26
-#define STBY 25
-#define OFFSET_A 1
-static Motor motor1(AIN1, AIN2, PWMA, OFFSET_A, STBY);
 
 Servo esc;
 Servo servo;
@@ -36,6 +31,7 @@ void setup() {
 	init_wifi();
 	init_esp_now();
 	init_esc();
+	init_arm_motor();
  //    dht11.begin();
  //
  //    //attach ESC
@@ -301,10 +297,10 @@ void loop() {
 
 void loop()
 {
-	// delay(2000);
-	// motor1.drive(128);
-	// motor1.brake();
-	// delay(2000);
-	// motor1.drive(-128, 7000);
-	// motor1.brake();
+	/*
+	drive_arm_motor(2);
+	delay(1000);
+	drive_arm_motor(2);
+	delay(1000);
+	*/
 }
